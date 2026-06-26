@@ -407,9 +407,9 @@
 <div class="section section-center" style="position:relative;z-index:1;">
   <div class="script section-heading">Құрметті қонақтар!</div>
   <p class="inv-text">
-    Сіздерді ұлымыз<br>
+    Сіздерді балаларымыз<br>
     <span class="script inv-names-inline">Азат</span><br>
-    пен келініміз<br>
+    пен<br>
     <span class="script inv-names-inline">Ұлдананың</span><br><br>
     үйлену тойына арналған салтанатты ақ дастарханымыздың қадірлі қонағы болуға шақырамыз!
   </p>
@@ -443,7 +443,7 @@
     </div>
     <div class="time-block">
       <div class="time-label-s">Басталуы</div>
-      <div class="script time-big">19 : 00</div>
+      <div class="script time-big">18 : 00</div>
     </div>
   </div>
 </div></div>
@@ -481,7 +481,7 @@
         <div class="loc-icon">🕖</div>
         <div>
           <div class="loc-lbl">Уақыты</div>
-          <div class="loc-val">18 қыркүйек 2026 · 19:00</div>
+          <div class="loc-val">18 қыркүйек 2026 · 18:00</div>
         </div>
       </div>
       <div class="loc-row">
@@ -539,7 +539,7 @@
 
 <script>
 function tick() {
-  const target = new Date('2026-09-18T19:00:00');
+  const target = new Date('2026-09-18T18:00:00');
   const now = new Date();
   const diff = target - now;
   if (diff <= 0) {
@@ -578,5 +578,49 @@ function submitForm() {
   document.getElementById('success-box').style.display = 'block';
 }
 </script>
-</body>
+<!-- YOUTUBE MUSIC -->
+<div id="yt-player" style="position:fixed;bottom:24px;right:24px;z-index:999;">
+  <div style="background:rgba(255,255,255,0.95);border-radius:40px;padding:10px 18px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,0.15);border:1px solid var(--rose-light);">
+    <button onclick="toggleMusic()" id="music-btn" style="background:var(--rose-deep);border:none;width:36px;height:36px;border-radius:50%;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">▶</button>
+    <span style="font-size:11px;color:var(--text-mid);letter-spacing:1px;font-family:'Nunito',sans-serif;">Музыка</span>
+  </div>
+</div>
+<iframe id="yt-iframe" width="0" height="0" style="display:none;"
+  src="https://www.youtube.com/embed/thmzDeUqAP0?enablejsapi=1&autoplay=0"
+  allow="autoplay" frameborder="0"></iframe>
+<script>
+  var player;
+  var playing = false;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('yt-iframe', {
+      videoId: 'thmzDeUqAP0',
+      playerVars: { autoplay: 0 },
+      events: { onReady: function(e) { e.target.setVolume(70); } }
+    });
+  }
+  function toggleMusic() {
+    if (!player) return;
+    if (playing) {
+      player.pauseVideo();
+      document.getElementById('music-btn').textContent = '▶';
+    } else {
+      player.playVideo();
+      document.getElementById('music-btn').textContent = '⏸';
+    }
+    playing = !playing;
+  }
+  // Auto-start on first scroll
+  var autoStarted = false;
+  window.addEventListener('scroll', function() {
+    if (!autoStarted && player && typeof player.playVideo === 'function') {
+      player.playVideo();
+      document.getElementById('music-btn').textContent = '⏸';
+      playing = true;
+      autoStarted = true;
+    }
+  }, {once: true});
+</script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
+
 </html>
